@@ -50,9 +50,13 @@
     <Compile Include="DAO\CustomerDAO.cs" />
     <Compile Include="DAO\EmployeeDAO.cs" />
     <Compile Include="DAO\OrderDAO.cs" />
+    <Compile Include="DAO\ProductDAO.cs" />
+    <Compile Include="DAO\ShipperDAO.cs" />
     <Compile Include="Entity\Customer.cs" />
     <Compile Include="Entity\Employee.cs" />
     <Compile Include="Entity\Order.cs" />
+    <Compile Include="Entity\Product.cs" />
+    <Compile Include="Entity\Shipper.cs" />
     <Compile Include="Model\DBContext.cs" />
     <Compile Include="FilterMaster.cs">
       <SubType>Form</SubType>

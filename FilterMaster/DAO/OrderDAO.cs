@@ -12,6 +12,58 @@ namespace FilterMaster.DAO
     class OrderDAO
     {
         DBContext dBContext = new DBContext();
+
+
+        public int GetMaxOrderID()
+        {
+            int num = 0;
+            SqlConnection cnn = dBContext.GetConnection();
+            cnn.Open();
+            String query = "Select MAX(OrderID) from Orders";
+                            
+
+            SqlCommand command = new SqlCommand(query, cnn);
+          
+            SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                num = reader.GetInt32(0);
+            }
+
+            cnn.Close();
+
+            return num;
+        }
+
+
+        public void InsertOrders(String customer_id,int employee_id,DateTime orderdate, int shipid)
+        {
+            SqlConnection cnn = dBContext.GetConnection();
+            cnn.Open();
+            String sql = "Insert into Orders (CustomerID,EmployeeID,OrderDate,ShipVia)"+
+                         " values(@val1, @val2,@val3, @val4)";
+            SqlCommand command = new SqlCommand(sql, cnn);
+            command.Parameters.AddWithValue("@val1", customer_id);
+            command.Parameters.AddWithValue("@val2", employee_id);
+            command.Parameters.AddWithValue("@val3", orderdate);
+            command.Parameters.AddWithValue("@val4",shipid);
+            command.ExecuteNonQuery();
+        }
+        public void InsertOrdersDetails(int order_id,int product_id,Decimal unit_price,int quantity)
+        {
+            SqlConnection cnn = dBContext.GetConnection();
+            cnn.Open();
+            String sql = "Insert into [Order Details] (OrderID,ProductID,UnitPrice,Quantity)"+
+                    " values(@val1, @val2, @val3, @val4)";
+            SqlCommand command = new SqlCommand(sql, cnn);
+            command.Parameters.AddWithValue("@val1", order_id);
+            command.Parameters.AddWithValue("@val2", product_id);
+            command.Parameters.AddWithValue("@val3", unit_price);
+            command.Parameters.AddWithValue("@val4", quantity);
+           
+            command.ExecuteNonQuery();
+        }
         public List<Order> GetAllData1(DateTime from,DateTime to)
         {
             List<Order> lists = new List<Order>();
@@ -23,9 +75,7 @@ namespace FilterMaster.DAO
                       + " and"
                       + " Customers.CustomerID = Orders.CustomerID"
                       + " and"
-                      + " Orders.OrderDate >= @val1 "
-                      +" and"
-                      +" Orders.RequiredDate <= @val2"
+                      + " Orders.OrderDate BETWEEN @val1 AND @val2"
                       ;
             SqlCommand command = new SqlCommand(query, cnn);
             command.Parameters.AddWithValue("@val1",from);
@@ -48,15 +98,15 @@ namespace FilterMaster.DAO
                 }
                 if (!reader.IsDBNull(3))
                 {
-                    temp.OrderDate = reader.GetDateTime(3);
+                    temp.OrderDate = reader.GetDateTime(3).Date;
                 }
                 if (!reader.IsDBNull(4))
                 {
-                    temp.RequiredDate = reader.GetDateTime(4);
+                    temp.RequiredDate = reader.GetDateTime(4).Date;
                 }
                 if (!reader.IsDBNull(5))
                 {
-                    temp.ShippedDate =  reader.GetDateTime(5);
+                    temp.ShippedDate =  reader.GetDateTime(5).Date;
                 }
                 if (!reader.IsDBNull(6))
                 {
@@ -82,9 +132,7 @@ namespace FilterMaster.DAO
                       + " and"
                       + " Customers.CustomerID = Orders.CustomerID"
                       + " and"
-                      + " Orders.OrderDate >= @val1 "
-                      + " and"
-                      + " Orders.RequiredDate <= @val2"
+                      + " Orders.OrderDate BETWEEN @val1 AND @val2"  
                       + " and"
                       + " Employees.EmployeeID = @val3"
                       ;
@@ -110,15 +158,15 @@ namespace FilterMaster.DAO
                 }
                 if (!reader.IsDBNull(3))
                 {
-                    temp.OrderDate = reader.GetDateTime(3);
+                    temp.OrderDate = reader.GetDateTime(3).Date;
                 }
                 if (!reader.IsDBNull(4))
                 {
-                    temp.RequiredDate = reader.GetDateTime(4);
+                    temp.RequiredDate = reader.GetDateTime(4).Date;
                 }
                 if (!reader.IsDBNull(5))
                 {
-                    temp.ShippedDate = reader.GetDateTime(5);
+                    temp.ShippedDate = reader.GetDateTime(5).Date;
                 }
                 if (!reader.IsDBNull(6))
                 {
@@ -144,9 +192,7 @@ namespace FilterMaster.DAO
                       + " and"
                       + " Customers.CustomerID = Orders.CustomerID"
                       + " and"
-                      + " Orders.OrderDate >= @val1 "
-                      + " and"
-                      + " Orders.RequiredDate <= @val2"
+                      + " Orders.OrderDate BETWEEN @val1 AND @val2"
                       + " and"
                       + " Customers.CustomerID = @val3"
                       ;
@@ -172,15 +218,15 @@ namespace FilterMaster.DAO
                 }
                 if (!reader.IsDBNull(3))
                 {
-                    temp.OrderDate = reader.GetDateTime(3);
+                    temp.OrderDate = reader.GetDateTime(3).Date;
                 }
                 if (!reader.IsDBNull(4))
                 {
-                    temp.RequiredDate = reader.GetDateTime(4);
+                    temp.RequiredDate = reader.GetDateTime(4).Date;
                 }
                 if (!reader.IsDBNull(5))
                 {
-                    temp.ShippedDate = reader.GetDateTime(5);
+                    temp.ShippedDate = reader.GetDateTime(5).Date;
                 }
                 if (!reader.IsDBNull(6))
                 {
@@ -206,9 +252,7 @@ namespace FilterMaster.DAO
                       + " and"
                       + " Customers.CustomerID = Orders.CustomerID"
                       + " and"
-                      + " Orders.OrderDate >= @val1 "
-                      + " and"
-                      + " Orders.RequiredDate <= @val2"
+                      + " Orders.OrderDate BETWEEN @val1 AND @val2"
                       + " and"
                       + " Employees.EmployeeID = @val3"
                       + " and"
@@ -237,16 +281,18 @@ namespace FilterMaster.DAO
                 }
                 if (!reader.IsDBNull(3))
                 {
-                    temp.OrderDate = reader.GetDateTime(3);
+                    temp.OrderDate = reader.GetDateTime(3).Date;
                 }
                 if (!reader.IsDBNull(4))
                 {
-                    temp.RequiredDate = reader.GetDateTime(4);
+                    temp.RequiredDate = reader.GetDateTime(4).Date;
                 }
+                
                 if (!reader.IsDBNull(5))
                 {
-                    temp.ShippedDate = reader.GetDateTime(5);
+                    temp.ShippedDate = reader.GetDateTime(5).Date;
                 }
+               
                 if (!reader.IsDBNull(6))
                 {
                     temp.ShipVia = reader.GetInt32(6);

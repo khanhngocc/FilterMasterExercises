@@ -40,6 +40,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.checkedList = new System.Windows.Forms.CheckedListBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox_ShipVia = new System.Windows.Forms.ComboBox();
+            this.label = new System.Windows.Forms.Label();
+            this.listBox = new System.Windows.Forms.ListBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnAddOrder = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,7 +89,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 131);
+            this.label4.Location = new System.Drawing.Point(366, 26);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 17);
             this.label4.TabIndex = 5;
@@ -91,7 +98,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(331, 131);
+            this.label5.Location = new System.Drawing.Point(366, 81);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(25, 17);
             this.label5.TabIndex = 7;
@@ -99,17 +106,21 @@
             // 
             // dateFrom
             // 
-            this.dateFrom.Location = new System.Drawing.Point(100, 126);
+            this.dateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateFrom.Location = new System.Drawing.Point(412, 21);
             this.dateFrom.Name = "dateFrom";
             this.dateFrom.Size = new System.Drawing.Size(200, 22);
             this.dateFrom.TabIndex = 8;
+            this.dateFrom.Value = new System.DateTime(1996, 3, 1, 0, 0, 0, 0);
             // 
             // dateTo
             // 
-            this.dateTo.Location = new System.Drawing.Point(384, 126);
+            this.dateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTo.Location = new System.Drawing.Point(412, 76);
             this.dateTo.Name = "dateTo";
             this.dateTo.Size = new System.Drawing.Size(200, 22);
             this.dateTo.TabIndex = 9;
+            this.dateTo.Value = new System.DateTime(1996, 12, 1, 0, 0, 0, 0);
             // 
             // btnEdit
             // 
@@ -132,6 +143,7 @@
             // 
             // checkedList
             // 
+            this.checkedList.CheckOnClick = true;
             this.checkedList.FormattingEnabled = true;
             this.checkedList.Items.AddRange(new object[] {
             "OrderID",
@@ -151,18 +163,91 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(202, 279);
+            this.dataGridView1.Location = new System.Drawing.Point(203, 279);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1035, 424);
+            this.dataGridView1.Size = new System.Drawing.Size(973, 468);
             this.dataGridView1.TabIndex = 21;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(24, 126);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 17);
+            this.label6.TabIndex = 22;
+            this.label6.Text = "ShipVia";
+            // 
+            // comboBox_ShipVia
+            // 
+            this.comboBox_ShipVia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_ShipVia.FormattingEnabled = true;
+            this.comboBox_ShipVia.Location = new System.Drawing.Point(100, 123);
+            this.comboBox_ShipVia.Name = "comboBox_ShipVia";
+            this.comboBox_ShipVia.Size = new System.Drawing.Size(200, 24);
+            this.comboBox_ShipVia.TabIndex = 23;
+            // 
+            // label
+            // 
+            this.label.AutoSize = true;
+            this.label.Location = new System.Drawing.Point(1208, 249);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(101, 17);
+            this.label.TabIndex = 24;
+            this.label.Text = "ListOfProducts";
+            // 
+            // listBox
+            // 
+            this.listBox.FormattingEnabled = true;
+            this.listBox.ItemHeight = 16;
+            this.listBox.Location = new System.Drawing.Point(1211, 279);
+            this.listBox.Name = "listBox";
+            this.listBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBox.Size = new System.Drawing.Size(184, 468);
+            this.listBox.TabIndex = 25;
+            this.listBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseClick);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(155, 180);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(104, 35);
+            this.btnRefresh.TabIndex = 27;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnAddOrder
+            // 
+            this.btnAddOrder.Location = new System.Drawing.Point(281, 180);
+            this.btnAddOrder.Name = "btnAddOrder";
+            this.btnAddOrder.Size = new System.Drawing.Size(104, 35);
+            this.btnAddOrder.TabIndex = 28;
+            this.btnAddOrder.Text = "Add Order";
+            this.btnAddOrder.UseVisualStyleBackColor = true;
+            this.btnAddOrder.Click += new System.EventHandler(this.btnAddOrder_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Location = new System.Drawing.Point(1424, 279);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(468, 468);
+            this.panel1.TabIndex = 29;
             // 
             // FilterMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1271, 742);
+            this.ClientSize = new System.Drawing.Size(1924, 772);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.btnAddOrder);
+            this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.listBox);
+            this.Controls.Add(this.label);
+            this.Controls.Add(this.comboBox_ShipVia);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.checkedList);
             this.Controls.Add(this.label3);
@@ -175,6 +260,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxEmployee);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FilterMaster";
             this.Text = "FilterMaster";
@@ -198,6 +284,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckedListBox checkedList;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox_ShipVia;
+        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.ListBox listBox;
+        private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnAddOrder;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
